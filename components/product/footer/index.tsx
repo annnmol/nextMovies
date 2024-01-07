@@ -1,8 +1,10 @@
 import Image from "next/image";
+
+//user defined
 import FooterIcon from "./footerIcon";
 
 const instagram = "/assets/icons/instagram.svg";
-const twitter = "/assets/icons/twitter.svg";
+// const twitter = "/assets/icons/twitter.svg";
 const github = "/assets/icons/github.svg";
 const linkedin = "/assets/icons/linkedin.svg";
 const companyLogo = "/assets/icons/tv.svg";

@@ -3,37 +3,56 @@
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
-import { getMovies } from "@/app/_actions/action";
+import { getAllMovies } from "@/lib/actions/movies.action";
+import { AnimeCardProps } from "@/types";
+import { useRouter, useSearchParams } from "next/navigation";
+import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
 
 let page = 2;
 const spinnerImage = "/assets/icons/spinner.svg";
 
-export type AnimeCard = JSX.Element;
+interface FetchAllMoviesProps {
+  initialData: AnimeCardProps[];
+}
 
-function LoadMore() {
+function FetchAllMovies({ initialData }: FetchAllMoviesProps) {
   const { ref, inView } = useInView();
+  const router = useRouter();
 
-  const [data, setData] = useState<AnimeCard[]>([]);
+  // const {data,  reFetch} = useMovies({initialData});
   const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState<AnimeCardProps[]>([]);
+  const urlParams = useSearchParams();
+  const query = urlParams.get("query")?.toString() ?? "";
 
   useEffect(() => {
-    if (inView) {
+    if (inView && data?.length > 0) {
       setIsLoading(true);
       const delay = 500;
-
       const timeoutId = setTimeout(() => {
-        getMovies(page).then((res) => {
-          setData([...data, ...res]);
+        getAllMovies({
+          page,
+          query: query,
+        }).then((res) => {
+          if (res.length === 0) return;
+
+          setData((prev) => prev?.length > 0 ? [...prev, ...res] : res);
           page++;
         });
-
         setIsLoading(false);
       }, delay);
 
       // Clear the timeout if the component is unmounted or inView becomes false
       return () => clearTimeout(timeoutId);
     }
-  }, [inView, data, isLoading]);
+  }, [inView, data, query]);
+  
+  useEffect(() => {
+    if (initialData) {
+      page=2;
+      setData(initialData);
+    }
+  }, [initialData]);
 
   return (
     <>
@@ -58,4 +77,4 @@ function LoadMore() {
   );
 }
 
-export default LoadMore;
+export default FetchAllMovies;

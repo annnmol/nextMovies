@@ -1,7 +1,8 @@
 import Image from "next/image";
 
+//user defined
 const companyLogo = "/assets/icons/tv.svg";
-const bannerImage = "/assets/icons/anime.png";
+const bannerImage = "/assets/icons/anime.webp";
 
 function Hero() {
   return (
@@ -16,8 +17,8 @@ function Hero() {
           sizes="auto"
         />
         <h1 className="sm:text-6xl text-5xl text-white lg:max-w-lg font-bold leading-[120%]">
-          Explore The <span className="red-gradient">Diverse Realms</span> of
-          Anime Magic
+          Epic Choices, <span className="red-gradient">Endless Movies</span> -
+          nextMovies!
         </h1>
       </div>
       <div className="lg:flex-1 relative w-full h-[50vh] justify-center">

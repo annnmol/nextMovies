@@ -1,7 +1,10 @@
 import Image from "next/image";
-import { MotionDiv } from "../animatedTags";
 
-const stagger = 0.25;
+//user defined
+import { MotionDiv } from "@/components/shared/animatedTags";
+import { AnimeProp } from "@/types";
+
+const stagger = 0.20;
 
 const starIcon = "/assets/icons/star.svg";
 const episodesIcon = "/assets/icons/episodes.svg";
@@ -10,18 +13,6 @@ const variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
 };
-
-export interface AnimeProp {
-  id: string;
-  name: string;
-  image: {
-    original: string;
-  };
-  kind: string;
-  episodes: number;
-  episodes_aired: number;
-  score: string;
-}
 
 interface Prop {
   anime: AnimeProp;
